@@ -1,0 +1,57 @@
+
+service: ArchiveMachine
+
+provider:
+  name: aws
+  stage: prod
+  lambdaHashingVersion: 20201221
+  region: us-east-1
+  runtime: python3.8
+
+plugins:
+  - serverless-python-requirements
+#- serverless-step-functions
+
+package:
+  exclude:
+    - node_modules/**
+    - venv/**
+
+custom:
+  pythonRequirements:
+    dockerizePip: false
+
+functions:
+  MicroCrawler:
+    handler: handler.lambda_handler
+
+#stepFunctions:
+#  stateMachines:
+#    MetaverseCrawler:
+##      events:
+##        - schedule: rate(1 day)
+##          enabled: true
+#      definition:
+#        Comment: "Archive Crawl Metaverse Sources"
+#        StartAt: MetaverseCrawler
+#        States:
+#          MetaverseCrawler:
+#            Type: Task
+#            Resource: "arn:aws:lambda:us-east-1:377741870508:function:ArchiveMachine-prod-Archive-Crawler-Metaverse"
+#            Retry:
+#              - ErrorEquals:
+#                  - States.Timeout
+#                IntervalSeconds: 30
+#                MaxAttempts: 2
+#                BackoffRate: 2
+#              - ErrorEquals:
+#                  - States.TaskFailed
+#                IntervalSeconds: 30
+#                MaxAttempts: 2
+#                BackoffRate: 2
+#              - ErrorEquals:
+#                  - States.ALL
+#                IntervalSeconds: 5
+#                MaxAttempts: 5
+#                BackoffRate: 2
+#            End: true
