@@ -1,14 +1,14 @@
 
 import Crawler
-from DiscordAlert import Alert
-import fopResources
+import Alert
+import ArticleResources
 from FList import LIST
 import json
 import random
 
-popular_sources = fopResources.get_popular_sources()
-google_sources = fopResources.get_google_sources()
-metaverse_sources = fopResources.get_metaverse_sources()
+popular_sources = ArticleResources.get_popular_sources()
+google_sources = ArticleResources.get_google_sources()
+metaverse_sources = ArticleResources.get_metaverse_sources()
 raw_sources = LIST.flatten(popular_sources, google_sources)
 no_dups = list(set(raw_sources))
 count = len(no_dups)
